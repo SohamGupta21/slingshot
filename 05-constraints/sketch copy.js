@@ -21,6 +21,7 @@ const drawConstraint = Helpers.drawConstraint;
 
 let engine;
 let ground;
+let ball;
 
 // the top screw on
 let topConstraint;
@@ -51,7 +52,7 @@ function setup() {
 
   // adding bridge
   const group = Body.nextGroup(true);
-  const rects = Composites.stack(100, 200, 5, 1, 55, 500, function(x, y) {
+  const rects = Composites.stack(100, 200, 6, 1, 30, 50, function(x, y) {
     //stack syntax: xx, yy, col, row, colGap, rowGap, callback
     //Ian Notes: colGap controls tightness of the string
     return Bodies.rectangle(x, y, 50, 5, { collisionFilter: { group: group } });
@@ -65,8 +66,10 @@ function setup() {
     bridgeLeftConstraint = Constraint.create({
       pointA: {x: 175, y: 250},
       bodyB: rects.bodies[0],
-      pointB: {x: -25, y: 0},
-      stiffness: 0.1
+      pointB: {x: -10, y: 0},
+      //Ian Notes: I changed the x on point B to center the rectanlges
+      //Ian Notes: OG Value: -5
+      stiffness: 0.3
     })
 
     Composite.add(rects, bridgeLeftConstraint);
@@ -74,12 +77,16 @@ function setup() {
     bridgeRightConstraint = Constraint.create({
       pointA: {x: 625, y: 250},
       bodyB: rects.bodies[rects.bodies.length-1],
-      pointB: {x: +5, y: 0},
-      stiffness: 0.02
+      pointB: {x: -5, y: 0},
+      stiffness: 0.3
     })
     Composite.add(rects, bridgeRightConstraint);
 
   //------------------------Bridge Stuff End------------------------//
+
+    // add ball
+    ball = Bodies.circle(400, 400, 40);
+    World.add(engine.world, [ball]);
 
   // //Top Screw On
   // rect1 = Bodies.rectangle(200, 20, 100, 5); //sling shot shape
@@ -153,6 +160,7 @@ function draw() {
   drawBody(leftPost);
   drawBody(rightPost);
   drawBodies(bridge.bodies);
+  drawBody(ball);
 
   drawMouse(mouseConstraint);
 }
