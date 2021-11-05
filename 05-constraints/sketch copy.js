@@ -55,7 +55,7 @@ function setup() {
   const rects = Composites.stack(100, 200, 6, 1, 30, 50, function(x, y) {
     //stack syntax: xx, yy, col, row, colGap, rowGap, callback
     //Ian Notes: colGap controls tightness of the string
-    return Bodies.rectangle(x, y, 50, 5, { collisionFilter: { group: group } });
+    return Bodies.rectangle(x, y, 50, 10, { collisionFilter: { group: group } });
   });
   bridge = Composites.chain(rects, 0.5, 0, -0.5, 0, {stiffness: 1.0, length: 1.0, render: {type: 'line'}});
   //Composites syntax: composite, xOffsetA, yOffsetA, xOffsetB, yOffsetB, options(Ie stiffness, length, etc)
@@ -85,7 +85,7 @@ function setup() {
   //------------------------Bridge Stuff End------------------------//
 
     // add ball
-    ball = Bodies.circle(400, 400, 40);
+    ball = Bodies.circle(400, 400, 20);
     World.add(engine.world, [ball]);
 
   // //Top Screw On
