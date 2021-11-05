@@ -16,7 +16,6 @@ const drawMouse = Helpers.drawMouse;
 const drawBody = Helpers.drawBody;
 const drawBodies = Helpers.drawBodies;
 //^^ I have no idea what the difference is between this one and the one above
-
 //^^ Update, I think that's just to draw multiple bodies at hence (since a bridge is made of multiple bodies of rects)
 const drawConstraint = Helpers.drawConstraint;
 
@@ -52,8 +51,9 @@ function setup() {
 
   // adding bridge
   const group = Body.nextGroup(true);
-  const rects = Composites.stack(100, 200, 7, 1, 10, 5, function(x, y) {
+  const rects = Composites.stack(100, 200, 5, 1, 55, 500, function(x, y) {
     //stack syntax: xx, yy, col, row, colGap, rowGap, callback
+    //Ian Notes: colGap controls tightness of the string
     return Bodies.rectangle(x, y, 50, 5, { collisionFilter: { group: group } });
   });
   bridge = Composites.chain(rects, 0.5, 0, -0.5, 0, {stiffness: 1.0, length: 1.0, render: {type: 'line'}});
@@ -65,7 +65,7 @@ function setup() {
     bridgeLeftConstraint = Constraint.create({
       pointA: {x: 175, y: 250},
       bodyB: rects.bodies[0],
-      pointB: {x: -5, y: 0},
+      pointB: {x: -25, y: 0},
       stiffness: 0.1
     })
 
